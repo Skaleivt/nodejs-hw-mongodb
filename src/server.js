@@ -11,6 +11,8 @@ dotenv.config();
 export const setupServer = () => {
   const app = express();
   const PORT = Number(process.env.PORT) || 3000;
+
+  app.use(cors());
   app.use(express.json());
   app.use(
     pino({
@@ -22,7 +24,6 @@ export const setupServer = () => {
   app.use(contactsRouter);
   app.use(notFoundHandler);
   app.use(errorHandler);
-  app.use(cors());
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
