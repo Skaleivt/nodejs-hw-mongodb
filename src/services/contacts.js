@@ -55,13 +55,19 @@ export const createContactsSchema = Joi.object({
     'string.max': 'Username should have at most {#limit} characters',
     'any.required': 'Username is required',
   }),
-  phoneNumber: Joi.number().integer().min(6).max(16).required().messages({
-    'number.base': 'Phone number must be a number',
-    'number.integer': 'Phone number must be an integer',
-    'number.min': 'Phone number must be at least 6 digits',
-    'number.max': 'Phone number must not be longer than 16 digits',
-    'any.required': 'Phone number is required',
-  }),
+  phoneNumber: Joi.string()
+    .pattern(/^\+[0-9]+$/)
+    .min(6)
+    .max(16)
+    .required()
+    .messages({
+      'string.base': 'Phone number must be a string',
+      'string.pattern.base':
+        'Phone number must start with + and contain only digits',
+      'string.min': 'Phone number must be at least 6 characters long',
+      'string.max': 'Phone number must not be longer than 16 characters',
+      'any.required': 'Phone number is required',
+    }),
   email: Joi.string()
     .email({
       minDomainSegments: 2,
@@ -115,12 +121,18 @@ export const updateContactsSchema = Joi.object({
     'string.min': 'Username should have at least {#limit} characters',
     'string.max': 'Username should have at most {#limit} characters',
   }),
-  phoneNumber: Joi.number().integer().min(6).max(16).messages({
-    'number.base': 'Phone number must be a number',
-    'number.integer': 'Phone number must be an integer',
-    'number.min': 'Phone number must be at least 6 digits',
-    'number.max': 'Phone number must not be longer than 16 digits',
-  }),
+  phoneNumber: Joi.string()
+    .pattern(/^\+[0-9]+$/)
+    .min(6)
+    .max(16)
+    .messages({
+      'string.base': 'Phone number must be a string',
+      'string.pattern.base':
+        'Phone number must start with + and contain only digits',
+      'string.min': 'Phone number must be at least 6 characters long',
+      'string.max': 'Phone number must not be longer than 16 characters',
+      'any.required': 'Phone number is required',
+    }),
   email: Joi.string()
     .email({
       minDomainSegments: 2,
