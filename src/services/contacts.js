@@ -1,5 +1,4 @@
 import { ContactCollection } from '../db/models/contacts.js';
-import Joi from 'joi';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
 export const getAllContacts = async (
@@ -8,11 +7,12 @@ export const getAllContacts = async (
   sortOrder,
   sortBy,
   filter = {},
+  userId,
 ) => {
   const limit = perPage;
   const skip = (page - 1) * perPage;
 
-  const contactsQuery = ContactCollection.find();
+  const contactsQuery = ContactCollection.find({ userId });
   if (filter.type) {
     contactsQuery.where('contactType').equals(filter.type);
   }
@@ -29,130 +29,41 @@ export const getAllContacts = async (
     .limit(limit)
     .sort({ [sortBy]: sortOrder })
     .exec();
-
   const pagination = calculatePaginationData(contactsCount, page, perPage);
-
   return {
     data: contacts,
     ...pagination,
   };
 };
 
-export const getAllContactsById = async (contactId) => {
-  const contact = await ContactCollection.findById(contactId);
+export const getAllContactsById = async (contactId, userId) => {
+  const contact = await ContactCollection.findOne({ _id: contactId, userId });
   return contact;
 };
 
-export const createContacts = async (payload) => {
-  const contact = await ContactCollection.create(payload);
+export const createContacts = async (payload, userId) => {
+  const contact = await ContactCollection.create({ ...payload, userId });
   return contact;
 };
-
-export const createContactsSchema = Joi.object({
-  name: Joi.string().min(3).max(20).required().messages({
-    'string.base': 'Username should be a string',
-    'string.min': 'Username should have at least {#limit} characters',
-    'string.max': 'Username should have at most {#limit} characters',
-    'any.required': 'Username is required',
-  }),
-  phoneNumber: Joi.string()
-    .pattern(/^\+[0-9]+$/)
-    .min(6)
-    .max(16)
-    .required()
-    .messages({
-      'string.base': 'Phone number must be a string',
-      'string.pattern.base':
-        'Phone number must start with + and contain only digits',
-      'string.min': 'Phone number must be at least 6 characters long',
-      'string.max': 'Phone number must not be longer than 16 characters',
-      'any.required': 'Phone number is required',
-    }),
-  email: Joi.string()
-    .email({
-      minDomainSegments: 2,
-      tlds: { allow: ['com', 'net'] },
-    })
-    .min(3)
-    .max(20)
-    .required()
-    .messages({
-      'string.base': 'Email must be a string',
-      'string.email': 'Email must be a valid address with .com or .net domain',
-      'any.required': 'Email is required',
-    }),
-  isFavourite: Joi.boolean().required().messages({
-    'boolean.base': 'isFavourite must be true or false',
-    'any.required': 'isFavourite is required',
-  }),
-  contactType: Joi.string()
-    .valid('personal', 'home', 'work')
-    .required()
-    .min(3)
-    .max(20)
-    .messages({
-      'string.base': 'contactType must be a string',
-      'any.only': 'contactType must be one of [personal, home, work]',
-      'any.required': 'contactType is required',
-    }),
-});
 
 export const updateContacts = async (
   contactId,
+  userId,
   payload,
   options = { new: true },
 ) => {
   const contact = await ContactCollection.findOneAndUpdate(
-    { _id: contactId },
+    { _id: contactId, userId },
     payload,
     options,
   );
   return contact;
 };
 
-export const deleteContacts = async (contactId) => {
-  const contact = await ContactCollection.findOneAndDelete({ _id: contactId });
+export const deleteContacts = async (contactId, userId) => {
+  const contact = await ContactCollection.findOneAndDelete({
+    _id: contactId,
+    userId,
+  });
   return contact;
 };
-
-export const updateContactsSchema = Joi.object({
-  name: Joi.string().min(3).max(20).messages({
-    'string.base': 'Username should be a string',
-    'string.min': 'Username should have at least {#limit} characters',
-    'string.max': 'Username should have at most {#limit} characters',
-  }),
-  phoneNumber: Joi.string()
-    .pattern(/^\+[0-9]+$/)
-    .min(6)
-    .max(16)
-    .messages({
-      'string.base': 'Phone number must be a string',
-      'string.pattern.base':
-        'Phone number must start with + and contain only digits',
-      'string.min': 'Phone number must be at least 6 characters long',
-      'string.max': 'Phone number must not be longer than 16 characters',
-      'any.required': 'Phone number is required',
-    }),
-  email: Joi.string()
-    .email({
-      minDomainSegments: 2,
-      tlds: { allow: ['com', 'net'] },
-    })
-    .min(3)
-    .max(20)
-    .messages({
-      'string.base': 'Email must be a string',
-      'string.email': 'Email must be a valid address with .com or .net domain',
-    }),
-  isFavourite: Joi.boolean().messages({
-    'boolean.base': 'isFavourite must be true or false',
-  }),
-  contactType: Joi.string()
-    .valid('personal', 'home', 'work')
-    .min(3)
-    .max(20)
-    .messages({
-      'string.base': 'contactType must be a string',
-      'any.only': 'contactType must be one of: personal, home, work',
-    }),
-});
