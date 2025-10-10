@@ -23,22 +23,13 @@ export const registerUserSchema = Joi.object({
       'any.required': 'Email is required',
     }),
   password: Joi.string()
-    .min(8)
+    .min(8).max(30)
     .required()
-    .pattern(/[A-Z]/, 'uppercase')
-    .pattern(/[a-z]/, 'lowercase')
-    .pattern(/\d/, 'digit')
-    .pattern(/[!@#$%^&*]/, 'special')
     .messages({
       'string.base': 'Password must be a string.',
       'string.empty': 'Password cannot be empty.',
       'string.min': 'Password must be at least 8 characters long.',
       'any.required': 'Password is required.',
-      'string.pattern.name': `Password must contain:
-      - at least one uppercase letter,
-      - at least one lowercase letter,
-      - at least one number,
-      - at least one special character (!@#$%^&*).`,
     }),
 });
 
