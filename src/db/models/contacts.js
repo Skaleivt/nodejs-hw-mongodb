@@ -14,6 +14,11 @@ const contactSchema = new Schema(
       type: String,
       required: false,
     },
+    photo: {
+      type: String,
+      require: false,
+      default: null,
+    },
     isFavourite: {
       type: Boolean,
       default: false,

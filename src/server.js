@@ -6,6 +6,7 @@ import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import router from './routers/index.js';
 import cookieParser from 'cookie-parser';
+import path from 'node:path';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ export const setupServer = () => {
     }),
   );
   app.use(cookieParser());
+  app.use('/photo', express.static(path.resolve('src', 'uploads', 'photo')));
   app.use(router);
   app.use(notFoundHandler);
   app.use(errorHandler);
