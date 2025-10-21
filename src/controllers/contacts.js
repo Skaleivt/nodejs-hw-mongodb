@@ -66,8 +66,8 @@ const uploadPhoto = async (value) => {
     await fs.rename(
       value.path,
       path.resolve('src/uploads/photo', value.filename),
-      (photo = `${getEvnVar('APP_DOMAIN')}/photo/${value.filename}`),
     );
+    photo = `${getEvnVar('APP_DOMAIN')}/photo/${value.filename}`;
   }
 
   return photo;
