@@ -487,20 +487,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successfully deleted the contact",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully deleted a contact!"
-                    }
-                  }
-                }
-              }
+          "204": {
+            "description": "Successfully deleted the contact"
             }
           },
           "400": {
