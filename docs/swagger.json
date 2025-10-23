@@ -29,9 +29,7 @@
         "summary": "Get all contacts",
         "description": "Retrieve a list of contacts belonging to the authorized user. Supports pagination, filtering, and sorting.",
         "operationId": "getAllContacts",
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "security": [
           {
             "bearerAuth": []
@@ -75,10 +73,7 @@
             "description": "Sort order — ascending (asc) or descending (desc)",
             "schema": {
               "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ],
+              "enum": ["asc", "desc"],
               "example": "asc"
             }
           },
@@ -99,11 +94,7 @@
             "description": "Filter contacts by type (personal, work, home)",
             "schema": {
               "type": "string",
-              "enum": [
-                "personal",
-                "work",
-                "home"
-              ],
+              "enum": ["personal", "work", "home"],
               "example": "work"
             }
           }
@@ -186,9 +177,7 @@
         "summary": "Create a new contact",
         "description": "Create a new contact for the authorized user. Supports uploading a profile photo via multipart/form-data.",
         "operationId": "createContact",
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "security": [
           {
             "bearerAuth": []
@@ -219,11 +208,7 @@
                   "contactType": {
                     "type": "string",
                     "description": "Type of contact (personal, work, home)",
-                    "enum": [
-                      "personal",
-                      "work",
-                      "home"
-                    ],
+                    "enum": ["personal", "work", "home"],
                     "example": "personal"
                   },
                   "isFavourite": {
@@ -282,9 +267,7 @@
         "summary": "Get a contact by ID",
         "operationId": "getContactById",
         "description": "Retrieve a specific contact by its unique identifier. Only the authenticated user can access their own contacts.",
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "security": [
           {
             "bearerAuth": []
@@ -357,9 +340,7 @@
         "operationId": "updateContactById",
         "summary": "Update a contact by ID",
         "description": "Updates an existing contact by its ID. Allows changing text fields and uploading a new photo. Requires user authentication.",
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "security": [
           {
             "bearerAuth": []
@@ -466,9 +447,7 @@
         "summary": "Delete a contact by ID",
         "description": "Deletes a specific contact that belongs to the authorized user.",
         "operationId": "deleteContactById",
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "security": [
           {
             "bearerAuth": []
@@ -533,11 +512,7 @@
     "schemas": {
       "contacts": {
         "type": "object",
-        "required": [
-          "name",
-          "phoneNumber",
-          "contactType"
-        ],
+        "required": ["name", "phoneNumber", "contactType"],
         "properties": {
           "_id": {
             "type": "string",
@@ -555,18 +530,12 @@
             "example": "+380991234567"
           },
           "email": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": ["string", "null"],
             "description": "Contact email (optional)",
             "example": "john.doe@example.com"
           },
           "photo": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": ["string", "null"],
             "description": "Photo URL of the contact (Cloudinary or local)",
             "example": "https://res.cloudinary.com/demo/image/upload/v1734000000/contact123.jpg"
           },
@@ -579,11 +548,7 @@
           "contactType": {
             "type": "string",
             "description": "Type of contact",
-            "enum": [
-              "work",
-              "home",
-              "personal"
-            ],
+            "enum": ["work", "home", "personal"],
             "default": "personal",
             "example": "work"
           },
