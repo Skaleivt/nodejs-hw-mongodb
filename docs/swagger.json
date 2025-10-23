@@ -11,10 +11,10 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
+      "url": "http://127.0.0.1:8080"
     },
     {
-      "url": "https://example.com/api/v1"
+      "url": "https://nodejs-hw-mongodb-7-73cl.onrender.com"
     }
   ],
   "tags": [
@@ -356,7 +356,7 @@
       "patch": {
         "operationId": "updateContactById",
         "summary": "Update a contact by ID",
-        "description": "Updates an existing contact by its ID.  \nAllows changing text fields and uploading a new photo.  \nRequires user authentication.\n",
+        "description": "Updates an existing contact by its ID. Allows changing text fields and uploading a new photo. Requires user authentication.",
         "tags": [
           "Contacts"
         ],
@@ -487,21 +487,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successfully deleted the contact",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully deleted a contact!"
-                    }
-                  }
-                }
-              }
-            }
+          "204": {
+            "description": "Successfully deleted the contact"
           },
           "400": {
             "$ref": "#/components/responses/400"
