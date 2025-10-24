@@ -11,10 +11,10 @@
   },
   "servers": [
     {
-      "url": "http://127.0.0.1:8080"
+      "url": "https://nodejs-hw-mongodb-7-oin4.onrender.com"
     },
     {
-      "url": "https://nodejs-hw-mongodb-7-73cl.onrender.com"
+      "url": "http://127.0.0.1:8080"
     }
   ],
   "tags": [
