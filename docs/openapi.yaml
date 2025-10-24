@@ -10,8 +10,9 @@ tags:
   - name: Contacts
     description: Operations about users.
 servers:
-  - url: http://127.0.0.1:8080
   - url: https://nodejs-hw-mongodb-7-oin4.onrender.com
+  - url: http://127.0.0.1:8080
+
 paths:
   /contact:
     get:
