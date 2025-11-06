@@ -14,6 +14,11 @@ const contactSchema = new Schema(
       type: String,
       required: false,
     },
+    photo: {
+      type: String,
+      require: false,
+      default: null,
+    },
     isFavourite: {
       type: Boolean,
       default: false,
@@ -25,11 +30,14 @@ const contactSchema = new Schema(
       required: true,
       default: 'personal',
     },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+    },
   },
   {
     timestamps: true,
     versionKey: false,
   },
 );
-
 export const ContactCollection = model('contact', contactSchema);
